@@ -6,8 +6,13 @@ module Devise
       def initialize(params = {})
         ldap_config = ::Devise.config
         ldap_options = params
-        ldap_config["ssl"] = :simple_tls if ldap_config["ssl"] === true
-        ldap_options[:encryption] = ldap_config["ssl"].to_sym if ldap_config["ssl"]
+        if ldap_config["ssl"] === true
+          ldap_options[:encryption] = {method: :simple_tls}
+          # We have a customer that returns certs with the wrong hostname.
+          if ldap_config["ssl_verify_none"] === true
+            ldap_options[:encryption][:tls_options] = { verify_mode: OpenSSL::SSL::VERIFY_NONE } 
+          end
+        end
 
         @ldap = Net::LDAP.new(ldap_options)
         @ldap.host = ldap_config["host"]
