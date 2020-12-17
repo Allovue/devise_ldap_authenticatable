@@ -13,6 +13,7 @@ module Devise
   # Allow logging
   mattr_accessor :ldap_logger
   @@ldap_logger = true
+  @@logger_level = 0 # DEBUG
 
   # A path to YAML config file or a Proc that returns a
   # configuration hash
