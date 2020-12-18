@@ -11,9 +11,9 @@ require 'devise_ldap_authenticatable/ldap/connection'
 module Devise
   extend self
   # Allow logging
-  mattr_accessor :ldap_logger
+  mattr_accessor :ldap_logger, :ldap_logger_level
   @@ldap_logger = true
-  @@logger_level = 0 # DEBUG
+  @@ldap_logger_level = 0 # DEBUG
 
   # A path to YAML config file or a Proc that returns a
   # configuration hash
